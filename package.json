@@ -9,8 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anlancan96/react-native-socketio.git",
-    "baseUrl": "https://github.com/anlancan96/react-native-socketio"
+    "url": "git+https://github.com/anlancan96/react-native-socketio-background-service.git",
+    "baseUrl": "https://github.com/anlancan96/react-native-socketio-background-service"
   },
   "keywords": [
     "react-native"
@@ -27,9 +27,9 @@
     "react-native": "^0.59.10"
   },
   "bugs": {
-    "url": "https://github.com/anlancan96/react-native-socketio/issues"
+    "url": "https://github.com/anlancan96/react-native-socketio-background-service/issues"
   },
-  "homepage": "https://github.com/anlancan96/react-native-socketio#readme",
+  "homepage": "https://github.com/anlancan96/react-native-socketio-background-service#readme",
   "dependencies": {},
   "devDependencies": {
     "ws": ">=3.3.1"
