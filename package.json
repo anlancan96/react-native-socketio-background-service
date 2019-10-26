@@ -9,8 +9,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/github_account/react-native-socketio.git",
-    "baseUrl": "https://github.com/github_account/react-native-socketio"
+    "url": "git+https://github.com/anlancan96/react-native-socketio.git",
+    "baseUrl": "https://github.com/anlancan96/react-native-socketio"
   },
   "keywords": [
     "react-native"
@@ -27,8 +27,8 @@
     "react-native": "^0.59.10"
   },
   "bugs": {
-    "url": "https://github.com/github_account/react-native-socketio/issues"
+    "url": "https://github.com/anlancan96/react-native-socketio/issues"
   },
-  "homepage": "https://github.com/github_account/react-native-socketio#readme",
+  "homepage": "https://github.com/anlancan96/react-native-socketio#readme",
   "dependencies": {}
 }
