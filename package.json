@@ -1,0 +1,34 @@
+{
+  "name": "react-native-socketio-background-service",
+  "title": "React Native Socketio",
+  "version": "1.0.0",
+  "description": "TODO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/github_account/react-native-socketio.git",
+    "baseUrl": "https://github.com/github_account/react-native-socketio"
+  },
+  "keywords": [
+    "react-native"
+  ],
+  "author": "Green <anlancan96@gmail.com>",
+  "license": "MIT",
+  "licenseFilename": "LICENSE",
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-native": ">=0.59.0-rc.0 <1.0.x"
+  },
+  "devDependencies": {
+    "react": "^16.8.3",
+    "react-native": "^0.59.10"
+  },
+  "bugs": {
+    "url": "https://github.com/github_account/react-native-socketio/issues"
+  },
+  "homepage": "https://github.com/github_account/react-native-socketio#readme",
+  "dependencies": {}
+}
