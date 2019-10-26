@@ -26,11 +26,6 @@ class IO {
             throw 'Host is undefined';
         if (typeof config === 'undefined')
             config = {};
-        if (!!IO.instance) {
-            return IO.instance;
-        }
-        
-        IO.instance = this;
         this.sockets = Socketio;
         this.isConnected = false;
         this.handlers = {};
@@ -41,7 +36,6 @@ class IO {
         );
 
         this.sockets.initialize(host, config);
-        return this;
     }
 
     /**
@@ -59,6 +53,7 @@ class IO {
 
     connect () {
         this.sockets.connect();
+        return this;
     }
     
     /**
@@ -71,6 +66,7 @@ class IO {
         if (Platform.OS === 'android') {
           this.sockets.on(event);
         }
+        return this;
     }
 
     /**
@@ -80,10 +76,12 @@ class IO {
      */
     emit (event, data) {
         this.sockets.emit(event, data);
+        return this;
     }
 
     disconnect () {
         this.sockets.disconnect();
+        return this;
     }
 }
 
