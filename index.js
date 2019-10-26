@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { DeviceEventEmitter, NativeModules, Platform } from 'react-native';
 
 const { Socketio } = NativeModules;
 
