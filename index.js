@@ -26,11 +26,11 @@ class IO {
             throw 'Host is undefined';
         if (typeof config === 'undefined')
             config = {};
-        if (!!SingletonClass.instance) {
-            return SingletonClass.instance;
+        if (!!IO.instance) {
+            return IO.instance;
         }
-    
-        SingletonClass.instance = this;
+        
+        IO.instance = this;
         this.sockets = Socketio;
         this.isConnected = false;
         this.handlers = {};
@@ -88,4 +88,4 @@ class IO {
 }
 
 
-export default Socketio;
+export default IO;
