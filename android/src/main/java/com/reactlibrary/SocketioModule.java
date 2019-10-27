@@ -46,6 +46,9 @@ public class SocketioModule extends ReactContextBaseJavaModule {
     public void initialize(String connection, ReadableMap options) {
         try {
             this.mSocket = IO.socket(connection, MapUtil.mapToOptions((ReadableNativeMap) options));
+            mSocket.on(Socket.EVENT_CONNECT, onNewMessage("connect"));
+            mSocket.on(Socket.EVENT_DISCONNECT, onNewMessage("disconnect"));
+            mSocket.on(Socket.EVENT_CONNECT_ERROR, onNewMessage("connect_error"));
         }
         catch(URISyntaxException exception) {
             Log.e(TAG, "Socket Initialization error: ", exception);
