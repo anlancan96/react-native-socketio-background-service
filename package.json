@@ -1,7 +1,7 @@
 {
   "name": "react-native-socketio-background-service",
   "title": "React Native Socketio",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "TODO",
   "main": "index.js",
   "scripts": {
