@@ -1,4 +1,4 @@
-import { DeviceEventEmitter, NativeModules, Platform } from 'react-native';
+import { NativeEventEmitter, NativeModules } from 'react-native';
 
 const { Socketio } = NativeModules;
 
@@ -31,8 +31,8 @@ class IO {
         this.handlers = {};
         this.onAnyHandler = null;
 
-        this.deviceEventSubscription = DeviceEventEmitter.addListener(
-            'socketEvent', this._handleEvent.bind(this)
+        this.deviceEventSubscription = NativeEventEmitter.addListener(
+            'SocketEvent', this._handleEvent.bind(this)
         );
 
         this.sockets.initialize(host, config);
@@ -63,9 +63,7 @@ class IO {
      */
     on (event, handler) {
         this.handlers[event] = handler;
-        if (Platform.OS === 'android') {
-          this.sockets.on(event);
-        }
+        this.sockets.on(event);
         return this;
     }
 
