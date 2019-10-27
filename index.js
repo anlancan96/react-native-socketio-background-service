@@ -31,9 +31,8 @@ class IO {
         this.handlers = {};
         this.onAnyHandler = null;
 
-        this.deviceEventSubscription = NativeEventEmitter.addListener(
-            'SocketEvent', this._handleEvent.bind(this)
-        );
+        this.eventEmitter = new NativeEventEmitter(Socketio)
+            .addListener('SocketEvent', this._handleEvent.bind(this));
 
         this.sockets.initialize(host, config);
     }
@@ -46,7 +45,7 @@ class IO {
     _handleEvent (event) {
         if (this.handlers.hasOwnProperty(event.name)) {
           this.handlers[event.name](
-            (event.hasOwnProperty('items')) ? event.items : null
+            (event.hasOwnProperty('data')) ? event.data : null
           );
         }
     }
