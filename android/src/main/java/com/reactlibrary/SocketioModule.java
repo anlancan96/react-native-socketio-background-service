@@ -25,6 +25,7 @@ public class SocketioModule extends ReactContextBaseJavaModule {
     private static final String TAG = "SOCKETIOMODULE";
     private Socket mSocket;
     private final ReactApplicationContext reactContext;
+    private boolean allowRunBackground = false;
 
     public SocketioModule(ReactApplicationContext reactContext) {
         super(reactContext);

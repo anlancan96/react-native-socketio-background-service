@@ -64,6 +64,8 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.facebook.react:react-native:+'  // From node_modules
     implementation 'com.github.nkzawa:socket.io-client:0.6.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
 }
 
 def configureReactNativePom(def pom) {
@@ -82,13 +84,6 @@ def configureReactNativePom(def pom) {
                 name packageJson.license
                 url packageJson.repository.baseUrl + '/blob/master/' + packageJson.licenseFilename
                 distribution 'repo'
-            }
-        }
-
-        developers {
-            developer {
-                id packageJson.author.username
-                name packageJson.author.name
             }
         }
     }
