@@ -76,6 +76,14 @@ class IO {
         return this;
     }
 
+    /**
+     * @param {String} url
+     */
+    StartBackgroundWorker (url) {
+        this.sockets.StartBackgroundWorker(url);
+        return this;
+    }
+
     disconnect () {
         this.sockets.disconnect();
         return this;

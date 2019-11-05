@@ -1,6 +1,22 @@
 package com.reactlibrary;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleOwner;
+import android.arch.lifecycle.Observer;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import androidx.work.Constraints;
+import androidx.work.Data;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -20,16 +36,18 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class SocketioModule extends ReactContextBaseJavaModule {
     private static final String TAG = "SOCKETIOMODULE";
     private Socket mSocket;
     private final ReactApplicationContext reactContext;
     private boolean allowRunBackground = false;
-
+    private LifecycleOwner lifecycleOwner;
     public SocketioModule(ReactApplicationContext reactContext) {
         super(reactContext);
         this.reactContext = reactContext;
+        InitBroadcastReceiver();
     }
 
     @Override
@@ -54,6 +72,24 @@ public class SocketioModule extends ReactContextBaseJavaModule {
         catch(URISyntaxException exception) {
             Log.e(TAG, "Socket Initialization error: ", exception);
         }
+    }
+
+    @ReactMethod
+    public void StartBackgroundWorker(String connection){
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresBatteryNotLow(true)
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+        Data workerData = new Data.Builder()
+                .putString(SyncDataWorker.WORKER_URL, connection)
+                .build();
+        PeriodicWorkRequest periodicWork = new PeriodicWorkRequest.Builder(
+                SyncDataWorker.class,
+                3,
+                TimeUnit.SECONDS)
+                .setConstraints(constraints)
+                .build();
+        WorkManager.getInstance().enqueue(periodicWork);
     }
 
     @ReactMethod
@@ -114,5 +150,23 @@ public class SocketioModule extends ReactContextBaseJavaModule {
         else {
             Log.e(TAG, "Cannot execute on. mSocket is null. Initialize socket first!!!");
         }
+    }
+
+    private void InitBroadcastReceiver(){
+        LocalBroadcastManager.getInstance(this.getAppContext()).registerReceiver(mMessageReceiver,
+                new IntentFilter("local.incomingcall"));
+    }
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Log.d("receiver", "Got message: " + message);
+        }
+    };
+
+    private Context getAppContext() {
+        return this.reactContext.getApplicationContext();
     }
 }
