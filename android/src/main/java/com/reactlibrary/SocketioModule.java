@@ -1,5 +1,7 @@
 package com.reactlibrary;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.Observer;
@@ -7,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -76,20 +79,20 @@ public class SocketioModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void StartBackgroundWorker(String connection){
-        Constraints constraints = new Constraints.Builder()
-                .setRequiresBatteryNotLow(true)
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build();
-        Data workerData = new Data.Builder()
-                .putString(SyncDataWorker.WORKER_URL, connection)
-                .build();
-        PeriodicWorkRequest periodicWork = new PeriodicWorkRequest.Builder(
-                SyncDataWorker.class,
-                3,
-                TimeUnit.SECONDS)
-                .setConstraints(constraints)
-                .build();
-        WorkManager.getInstance().enqueue(periodicWork);
+        AlarmManager alarmManager = (AlarmManager)this.getAppContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(this.getAppContext(), SyncService.class);
+        intent.setAction(SyncService.ACTION_SYNC);
+        intent.putExtra(SyncService.EXTRA_CONNECTION, connection);
+        PendingIntent pendingIntent = PendingIntent.getService(this.getAppContext(), 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            alarmManager.setAndAllowWhileIdle(AlarmManager.ELAPSED_REALTIME_WAKEUP,  3000, pendingIntent);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            alarmManager.setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, 3000, pendingIntent);
+        }
+        else {
+            alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, 3000, pendingIntent);
+        }
     }
 
     @ReactMethod

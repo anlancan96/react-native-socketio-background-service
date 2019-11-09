@@ -8,14 +8,11 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application android:allowBackup="false">
-        <receiver
-            android:name=".SyncDataReceiver"
+        <service
+            android:name=".SyncService"
             android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="local.Broadcast"/>
-            </intent-filter>
-        </receiver>
+            android:exported="false"
+            android:process=":remote"></service>
 
         <activity
             android:name=".SocketIONotificationActivity"
